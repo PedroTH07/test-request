@@ -2,6 +2,11 @@
 
 This is a test API project where you can send requests using the four main HTTP methods: **GET**, **POST**, **PUT** and **DELETE**.
 
+![API Status](https://img.shields.io/badge/Test%20API-Ready%20to%20Request-green?style=for-the-badge&logo=server)
+
+> Try sending GET ✅, POST ✍️, PUT ♻️ and DELETE ❌ to see how this API responds!
+
+
 ## Endpoints
 
 | Request                                     | Response                                                                                  |
