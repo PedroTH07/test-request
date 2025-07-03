@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.Random;
 
 @RestController
@@ -24,18 +23,35 @@ public class ApiController {
     }
 
     @PostMapping
-    public Map<Object, Object> postResponse(@RequestBody Map<Object, Object> data) {
+    public ResponseEntity<?> postResponse(
+            @RequestBody Map<Object, Object> data,
+            @RequestParam(required = false, defaultValue = "0") Integer status
+    ) {
+        if (status > 0) {
+            return ResponseEntity.status(status).build();
+        }
         Integer randomId = new Random().nextInt(10) + 1;
-        return Map.of( "data", data, "id", randomId);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(Map.of( "data", data, "id", randomId));
     }
 
     @PutMapping
-    public ResponseEntity<?> putResponse(@RequestBody Map<Object, Object> data) {
+    public ResponseEntity<?> putResponse(
+            @RequestBody Map<Object, Object> data,
+            @RequestParam(required = false, defaultValue = "0") Integer status
+    ) {
+        if (status > 0) {
+            return ResponseEntity.status(status).build();
+        }
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping("/**")
-    public ResponseEntity<?> deleteResponse() {
+    public ResponseEntity<?> deleteResponse(@RequestParam(required = false, defaultValue = "0") Integer status) {
+        if (status > 0) {
+            return ResponseEntity.status(status).build();
+        }
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
