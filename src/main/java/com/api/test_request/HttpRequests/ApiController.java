@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 @RestController
@@ -12,8 +13,14 @@ import java.util.Random;
 public class ApiController {
 
     @GetMapping
-    public Map<String, String> getResponse() {
-        return Map.of("message", "ok");
+    public ResponseEntity<?> getResponse(@RequestParam(
+            name = "status", required = false, defaultValue = "0"
+    ) Integer status) {
+        if (status > 0) {
+            return ResponseEntity.status(status).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "ok"));
     }
 
     @PostMapping
